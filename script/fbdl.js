@@ -11,7 +11,7 @@ module.exports.config = {
 
 module.exports.run = async function ({ api, event, args }) {
   if (args.length === 0) {
-    await api(.)sendMessage('Please provide a valid Facebook video URL.', event.threadID);
+    await api.sendMessage('Please provide a valid Facebook video URL.', event.threadID);
     return;
   }
 
@@ -27,7 +27,7 @@ module.exports.run = async function ({ api, event, args }) {
       const highQualityLink = data.links['Download High Quality'];
 
       const videoBuffer = await axios.get(highQualityLink, { responseType: 'arraybuffer' });
-      const videoFileName = `${Date.now}.mp4`;
+      const videoFileName = `${Date.now()}.mp4`;
 
       await fs.promises.writeFile(videoFileName, videoBuffer.data);
       const videoStream = fs.createReadStream(videoFileName);
